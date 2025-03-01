@@ -1,47 +1,55 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Review {
-    private Movie movie;
-    private Customer customer;
-    private int rating; // Rating from 1 to 5
 
-    // Static list to store all reviews for movies
-    private static List<Review> reviews = new ArrayList<>();
+    private Customer customer;  // Customer who gave the review
+    private Movie movie;        // Movie being reviewed
+    private int rating;         // Rating between 1 and 5 (inclusive)
 
-    public Review(Movie movie, Customer customer, int rating) {
-        this.movie = movie;
+    // Constructor to initialize the review with customer, movie, and rating
+    public Review(Customer customer, Movie movie, int rating) {
         this.customer = customer;
-        this.rating = Math.max(1, Math.min(rating, 5)); // Ensure rating is between 1 and 5
-        reviews.add(this);
+        this.movie = movie;
+        setRating(rating);  // Enforce rating validation
     }
 
-    public static double getAverageRating(Movie movie) {
-        int totalReviews = 0;
-        int totalRating = 0;
-        for (Review review : reviews) {
-            if (review.movie.equals(movie)) {
-                totalReviews++;
-                totalRating += review.rating;
-            }
-        }
-        return totalReviews > 0 ? (double) totalRating / totalReviews : 0.0;
+    // Getters and Setters
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public static void displayRatings(Movie movie) {
-        System.out.println("Ratings for: " + movie.getTitle());
-        int totalReviews = 0;
-        for (Review review : reviews) {
-            if (review.movie.equals(movie)) {
-                System.out.println("Customer: " + review.customer.getName() + " | Rating: " + review.rating + " stars");
-                totalReviews++;
-            }
-        }
-        if (totalReviews == 0) {
-            System.out.println("No ratings available yet.");
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        if (rating >= 1 && rating <= 5) {
+            this.rating = rating;
         } else {
-            System.out.println("Average Rating: " + getAverageRating(movie) + " stars");
+            throw new IllegalArgumentException("Rating must be between 1 and 5.");
         }
+    }
+
+    // Method to display the review as stars (e.g., "★★★☆☆")
+    public String displayReview() {
+        StringBuilder stars = new StringBuilder();
+        for (int i = 0; i < rating; i++) {
+            stars.append("★");  // Add a filled star
+        }
+        for (int i = rating; i < 5; i++) {
+            stars.append("☆");  // Add an empty star
+        }
+        // Display the movie title along with the review stars
+        return "Review for \"" + movie.getTitle() + "\": " + stars.toString();
     }
 }
-
