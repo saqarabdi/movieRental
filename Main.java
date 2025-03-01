@@ -62,10 +62,8 @@ public class Main {
         }
 
         // Display movies in each genre
-        System.out.println("\nMovies in Comedy Genre:");
         comedyGenre.displayMovies();  // Display all movies in the Comedy genre
 
-        System.out.println("\nMovies in Action Genre:");
         actionGenre.displayMovies();  // Display all movies in the Action genre
     }
 }
