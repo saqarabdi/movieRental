@@ -9,10 +9,10 @@ public class Main {
         Membership member = new Membership(testCustomer, 1); // create a membership for the customer
 
         // Create movies and assign them to genres
-        Movie nemoMovie = new Movie("Nemo", 0, comedyGenre);  // Movie (Nemo) in Comedy genre
-        Movie shrekMovie = new Movie("Shrek", 0, comedyGenre);  // Movie (Shrek) in Comedy genre
-        Movie dieHardMovie = new Movie("Die Hard", 0, actionGenre);  // Movie (Die Hard) in Action genre
-        Movie johnWickMovie = new Movie("John Wick", 0, actionGenre);  // Movie (John Wick) in Action genre
+        Movie nemoMovie = new Movie("Nemo", 0, comedyGenre, new ChildrensPriceStrategy());  // Movie (Nemo) in Comedy genre
+        Movie shrekMovie = new Movie("Shrek", 0, comedyGenre, new ChildrensPriceStrategy());  // Movie (Shrek) in Comedy genre
+        Movie dieHardMovie = new Movie("Die Hard", 0, actionGenre, new RegularPriceStrategy());  // Movie (Die Hard) in Action genre
+        Movie johnWickMovie = new Movie("John Wick", 0, actionGenre, new NewReleasePriceStrategy());  // Movie (John Wick) in Action genre
 
         // Create rentals for the movies
         Rental nemoRental = new Rental(nemoMovie, 3, member);  // create rental for movie (Nemo)

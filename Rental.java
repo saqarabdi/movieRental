@@ -19,37 +19,17 @@ public class Rental {
     }
 
     public float costOfRental() {
-        float amount = 0;
-            switch (_movie.getPriceCode()) {
-                case Movie.REGULAR:
-                     amount += 2;
-                    if (_daysRented > 2) {
-                        amount += (_daysRented - 2) * 1.5;
-                    }
-                    break;
-                case Movie.NEW_RELEASE:
-                    amount += _daysRented * 3;
-                    break;
-                case Movie.CHILDRENS:
-                    amount += 1.5;
-                    if (_daysRented > 3) {
-                        amount += (_daysRented - 3) * 1.5;
-                    }
-                    break;
+        float basePrice = _movie.getPriceStrategy().calculatePrice(_daysRented);
+        if (_member.getIsMember()) {
+            switch (_member.getTier()) {
+                case 3: return basePrice * 0.5f;
+                case 2: return basePrice * 0.6f;
+                case 1: return basePrice * 0.7f;
             }
-            if(_member.getIsMember()){
-                if(_member.getTier() == 3){
-                    return (float) (amount*.5);
-                } else if(_member.getTier() == 2){
-                    return (float) (amount*.6);
-                } else if (_member.getTier() == 1){
-                    return (float) (amount*.7);
-                } else {
-                    return amount;
-                }
-            }
-        return amount;
+        }
+        return basePrice;
     }
+    
 
     public int frequentRenterPoints(){
         _frequentRenterPoints++;
